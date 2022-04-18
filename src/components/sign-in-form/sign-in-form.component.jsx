@@ -20,8 +20,6 @@ const SignInForm = () => {
 
   const { setCurrentUser } = useContext(UserContext);
 
-  console.log(formFields);
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
