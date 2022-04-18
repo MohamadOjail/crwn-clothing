@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword
+  signInAuthUserWithEmailAndPassword,
 } from "../../util/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
@@ -32,11 +32,24 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
+      const response = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
       console.log(response);
       resetFormFields();
     } catch (error) {
-      console.log(error);
+      switch (error.code) {
+        case "auth/user-not-found":
+          alert("User does not exists");
+          break;
+        case "auth/wrong-password":
+          alert("Wrong password");
+          break;
+        default:
+          alert(error);
+          break;
+      }
     }
   };
 
@@ -70,7 +83,7 @@ const SignInForm = () => {
 
         <div className="buttons-container">
           <Button type="submit">Log in</Button>
-          <Button buttonType="google" onClick={signInWithGoogle}>
+          <Button type='button' buttonType="google" onClick={signInWithGoogle}>
             Google sign in
           </Button>
         </div>
