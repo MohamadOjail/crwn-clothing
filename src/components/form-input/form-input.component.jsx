@@ -1,19 +1,15 @@
-import './form-input.styles.scss'
+import { Input, FormInputLabel, Group } from "./form-input.styles";
 
 const FormInput = ({ label, ...otherProps }) => {
   return (
-    <div className="group">
-        <input className="form-input" {...otherProps} />
-      {
-        label && (<label
-          className={`${
-            otherProps.value.length > 0 ? "shrink" : ""
-          } form-input-label`}
-        >
+    <Group>
+      <Input {...otherProps} />
+      {label && (
+        <FormInputLabel shrink={otherProps.value.length}>
           {label}
-        </label>)
-      }
-    </div>
+        </FormInputLabel>
+      )}
+    </Group>
   );
 };
 
